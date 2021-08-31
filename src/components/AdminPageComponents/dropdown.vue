@@ -65,8 +65,7 @@ export default defineComponent({
         }
 
         return {
-            indexOfDropdown, isOpen, store, toggleDropdown, onOptionClick,
-            all_workspaces: store.getters.all_workspaces
+            indexOfDropdown, isOpen, store, toggleDropdown, onOptionClick
         }
     }
 })

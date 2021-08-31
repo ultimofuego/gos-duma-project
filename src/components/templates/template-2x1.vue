@@ -1,18 +1,19 @@
 <template>
     <div class="grid2x2">
         <div class="box box1">
-            <dropdown :code="'left_window'" :space_id="id" :selectOption="onSelectedOption"></dropdown>
+            <dropdown :code="'left'" :space_id="id" :selectOption="onSelectedOption"></dropdown>
         </div>
         <div class="box box2">
-            <dropdown :code="'right_window'" :space_id="id" :selectOption="onSelectedOption"></dropdown>
+            <dropdown :code="'right'" :space_id="id" :selectOption="onSelectedOption"></dropdown>
         </div>
     </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref} from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useStore } from 'vuex'
 import Dropdown from '../AdminPageComponents/dropdown.vue'
+import axios from 'axios'
 
 export default defineComponent({
     name: 'template-2x2',
@@ -21,24 +22,17 @@ export default defineComponent({
     setup(props) {
         const component_name = ref('')
         const id = ref(props.workspace_id)
-        //const store = useStore()
-        //const wplaceholders = ref(props.holders)
+        const store = useStore()
 
         const onSelectedOption = (widget_id: number, code: string) => {
             console.log(widget_id, " ", code)
-            /*wplaceholders.value.workspaceId = id.value
-            wplaceholders.value.widgetId = widget_id
-            wplaceholders.value.id = wplaceholder_id
 
-            store.dispatch('fetchWplaceholders').then(response => {
-                store.commit('updateWplaceholders', response.data.content)
-                console.log(store.state.wplaceholders)
+            const wplaceholders = store.state.wplaceholders.filter(item => {
+                return item.code == code
             })
-
-            store.dispatch('pushToDB_wplaceholders', wplaceholders.value).then(response => {
-                console.log(response.data)
-            })*/
-
+            
+            wplaceholders[0].widgetId = widget_id
+            axios.put('/back/wplaceholder', wplaceholders[0])
         }
 
         return { component_name, id, onSelectedOption }

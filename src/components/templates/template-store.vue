@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onMounted, reactive } from 'vue'
+import { defineComponent, ref, onMounted } from 'vue'
 import Template2x2 from './template-2x2.vue'
 import Template2x1 from './template-2x1.vue'
 import { useStore } from 'vuex'
@@ -21,12 +21,14 @@ export default defineComponent({
         const id = ref(props.id)
         const templatesName = ref('')
         const wplaceholders = ref([])
+        const templateId = ref(null)
         
         onMounted(() => {
             axios.get(`/back/workspace/${id.value}`).then(response => {
                 //получить все wp для ws, потом передать в component
                 axios.get(`/back/template/${response.data.templateId}`).then(res => {
                     templatesName.value = res.data.component
+                    templateId.value = res.data.templateId
                 })
             })
 
@@ -34,13 +36,14 @@ export default defineComponent({
                 res.data.content.forEach(item => {
                     if(item.workspaceId == id.value) {
                         wplaceholders.value.push(item)
-                        store.commit('updateUsableWplaceholder', item)
                     }
                 })
+                store.commit('updateWplaceholders', wplaceholders)
+                console.log(store.state.wplaceholders)
             })
         })
 
-        return { store, templatesName }
+        return { store, templatesName, wplaceholders }
     }
     
 })
