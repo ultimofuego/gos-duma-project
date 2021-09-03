@@ -1,5 +1,6 @@
 <template>
     <div class="main-container">
+    <property-modal></property-modal>    
         <div class="background">
             <div class="btn-container">
                 <span>Добавить пространство</span>
@@ -27,7 +28,9 @@
 import { defineComponent } from 'vue'
 import { ref, onMounted } from 'vue'
 import { useStore } from 'vuex'
+
 import ModalWindow from './modal-window.vue'
+
 import router from '@/router/index'
 import axios from 'axios'
 
@@ -37,6 +40,7 @@ export default defineComponent({
     },
     setup() {
         const show = ref(false)
+        const propertyFlag = ref(false)
         const store = useStore()
         const templatesName = ref('')
 
@@ -68,7 +72,7 @@ export default defineComponent({
         }
 
         return {
-            templatesName, show, store, close, showModal, removeWorkspace, routeMeTo
+            templatesName, propertyFlag, show, store, close, showModal, removeWorkspace, routeMeTo
         }
     },
 })

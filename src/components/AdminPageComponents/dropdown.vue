@@ -9,7 +9,7 @@
             type="button"
             v-for="(widget, index) in store.state.widgets"
             :key="index"
-            @click="onOptionClick(widget.id, code)">
+            @click="onOptionClick(widget.component ,widget.id, code)">
                 {{widget.name}}
             </button>
         </div>
@@ -60,8 +60,8 @@ export default defineComponent({
             isOpen.value[index] = !isOpen.value[index]
         }
 
-        const onOptionClick = (widget_id, code) => {
-            props.selectOption(widget_id, code)
+        const onOptionClick = (widget_component ,widget_id, code) => {
+            props.selectOption(widget_component ,widget_id, code)
         }
 
         return {

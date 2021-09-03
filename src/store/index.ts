@@ -8,8 +8,10 @@ export type State = {
   template: any[],
   widgets: any[],
   workspaces: any[],
-  wplaceholders: any[]
-  usable_wplaceholders: any[]
+  wplaceholders: any[],
+  usable_wplaceholders: any[],
+  propertyList: any[]
+  flag: boolean[]
 }
 
 export const store = createStore({
@@ -20,7 +22,9 @@ export const store = createStore({
       widgets: <any>[],
       template: <any>[],
       wplaceholders: <any>[],
-      usable_wplaceholders: <any>[]
+      usable_wplaceholders: <any>[],
+      propertyList: <any>[],
+      flag: [false, false]
     }
   },
   actions: {
@@ -86,6 +90,9 @@ export const store = createStore({
     addWplaceholder(state, wplaceholder) {
       state.wplaceholders.push(wplaceholder)
     },
+    addPropertyList(state, propertyList) {
+      state.propertyList.push(propertyList)
+    },
     removeListItem(state, index) {
       state.list_items.splice(index, 1)
     },
@@ -106,6 +113,12 @@ export const store = createStore({
     },
     updateUsableWplaceholders(state, usable_wplaceholder) {
       state.usable_wplaceholders = usable_wplaceholder
+    },
+    updatePropertyList(state, propertyList) {
+      state.propertyList = propertyList
+    },
+    changeFlag(state, {index, value}) {
+      state.flag[index] = value
     }
   },
   getters: {

@@ -10,11 +10,12 @@ import Template2x2 from './template-2x2.vue'
 import Template2x1 from './template-2x1.vue'
 import { useStore } from 'vuex'
 import axios from 'axios'
+import PropertyModal from '@/components/modal-windows/property-modal.vue'
 
 export default defineComponent({
     props: ['id'],
     components: {
-        Template2x1, Template2x2
+        Template2x1, Template2x2, PropertyModal
     },
     setup(props) {
         const store = useStore()
@@ -25,7 +26,6 @@ export default defineComponent({
         
         onMounted(() => {
             axios.get(`/back/workspace/${id.value}`).then(response => {
-                //получить все wp для ws, потом передать в component
                 axios.get(`/back/template/${response.data.templateId}`).then(res => {
                     templatesName.value = res.data.component
                     templateId.value = res.data.templateId
@@ -39,11 +39,11 @@ export default defineComponent({
                     }
                 })
                 store.commit('updateWplaceholders', wplaceholders)
-                console.log(store.state.wplaceholders)
             })
         })
 
-        return { store, templatesName, wplaceholders }
+
+        return { store, templatesName, wplaceholders, templateId }
     }
     
 })
